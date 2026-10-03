@@ -70,14 +70,5 @@
     "price": 25000,
     "category": "Fotografía",
     "available": true
-  },
-  {
-    "id": 10,
-    "name": "Diseño de logo",
-    "description": "Diseño de identidad visual y logo para tu proyecto.",
-    "duration": 120,
-    "price": 35000,
-    "category": "Diseño",
-    "available": false
   }
 ]
