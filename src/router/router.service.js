@@ -1,10 +1,10 @@
 import {Router} from "express"
-import { getAll, getServiceById, addService, updateService, deleteService } from "../managers/ServiceManager.js"
+import { getAllServices, getServiceById, addService, updateService, deleteService } from "../managers/ServiceManager.js"
 
 const routerService = Router()
 
 routerService.get("/", async  (req, res) => {
-    const services = await getAll()
+    const services = await getAllServices()
     res.status(200).json({ Services: services })
 })
 

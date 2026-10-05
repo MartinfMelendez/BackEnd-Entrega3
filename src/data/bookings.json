@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "clientName": "Juan Pérez",
+    "clientEmail": "juan@email.com",
+    "date": "2026-10-10",
+    "time": "15:30",
+    "status": "confirmada",
+    "services": [
+      {
+        "id": 1,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "clientName": "Martin Biagi",
+    "clientEmail": "Martin@email.com",
+    "date": "2026-10-10",
+    "time": "15:30",
+    "status": "confirmada",
+    "services": [
+      {
+        "serviceId": 2,
+        "quantity": 3
+      },
+      {
+        "serviceId": 5,
+        "quantity": 3
+      },
+      {
+        "serviceId": 8,
+        "quantity": 1
+      },
+      {
+        "service": 5,
+        "quantity": 1
+      }
+    ]
+  }
+]

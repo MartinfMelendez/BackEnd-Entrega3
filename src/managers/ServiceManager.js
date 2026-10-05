@@ -25,7 +25,7 @@ class Service {
 }
 
 
-export async function getAll() { //Funcion para leer los archivos con FileSystem
+export async function getAllServices() { //Funcion para leer los archivos con FileSystem
     try {
         const archivoCompleto = await fs.readFile(PATH, 'utf-8')
         const datosArchivo = JSON.parse(archivoCompleto)
@@ -39,7 +39,7 @@ export async function getAll() { //Funcion para leer los archivos con FileSystem
 export async function getServiceById(id) {
     try {
 
-        const datos = await getAll()
+        const datos = await getAllServices()
 
         const service = datos.find(service => service.id == id);
         if (!service) {
@@ -63,7 +63,7 @@ export async function addService(name, description, duration, price, category, a
         }
         const newService = new Service(name, description, duration, price, category, available)
 
-        const services = await getAll()
+        const services = await getAllServices()
         services.push(newService)
 
         await fs.writeFile(PATH, JSON.stringify(services, null, 2), 'utf-8')
@@ -82,7 +82,7 @@ export async function updateService(nid, data) {
 
         const{id, ...rest} = data; // Evitar actualizar el id
         service = { ...service, ...rest }
-        const services = await getAll()
+        const services = await getAllServices()
         const index = services.findIndex(service => service.id == nid);
         services[index] = service;
         await fs.writeFile(PATH, JSON.stringify(services, null, 2), 'utf-8')
@@ -96,7 +96,7 @@ export async function updateService(nid, data) {
 
 export async function deleteService(id) {
     try {
-        const services = await getAll()
+        const services = await getAllServices()
         const index = services.findIndex(service => service.id == id);
         if (index === -1) {
             throw new Error("Servicio no encontrado")
