@@ -1,24 +1,44 @@
-# CoderHouse - Backend
+CoderHouse - Backend
 
-API REST desarrollada con **Node.js** y **Express.js** como parte del curso de Backend de CoderHouse.
+API REST desarrollada con Node.js y Express.js como parte del curso de Backend de CoderHouse.
 
-El proyecto implementa una API para la gestión de servicios, permitiendo realizar operaciones **CRUD** (crear, consultar, modificar y eliminar).
+El proyecto implementa una API para la gestión de servicios y reservas, utilizando persistencia de datos mediante archivos JSON y operaciones CRUD.
 
-## 🚀 Tecnologías utilizadas
+🚀 Tecnologías utilizadas
 
-* Node.js
-* Express.js
-* JavaScript
-* ES Modules
-* dotenv
-* npm
+Node.js
 
-## 📁 Estructura del proyecto
+Express.js
 
-```text
+JavaScript
+
+ES Modules
+
+File System (fs/promises)
+
+dotenv
+
+npm
+
+📁 Estructura del proyecto
 CoderHouse-BackEnd/
 │
 ├── src/
+│   ├── data/
+│   │   ├── bookings.json
+│   │   └── services.json
+│   │
+│   ├── managers/
+│   │   ├── BookingManager.js
+│   │   └── ServiceManager.js
+│   │
+│   ├── routes/
+│   │   ├── routerBooking.js
+│   │   ├── router.js
+│   │   └── routerService.js
+│   │
+│   ├── utils/
+│   │
 │   └── app.js
 │
 ├── .env.example
@@ -26,123 +46,99 @@ CoderHouse-BackEnd/
 ├── package.json
 ├── package-lock.json
 └── Readme.md
-```
 
-## ⚙️ Instalación
-
-### 1. Clonar el repositorio
-
-```bash
+⚙️ Instalación
+1. Clonar el repositorio
 git clone https://github.com/MartinfMelendez/CoderHouse-BackEnd.git
-```
 
-### 2. Ingresar al proyecto
-
-```bash
+2. Ingresar al proyecto
 cd CoderHouse-BackEnd
-```
 
-### 3. Instalar las dependencias
-
-```bash
+3. Instalar las dependencias
 npm install
-```
 
-### 4. Configurar las variables de entorno
+4. Configurar las variables de entorno
 
-Crear un archivo `.env` en la raíz del proyecto tomando como referencia el archivo `.env.example`.
+Crear un archivo .env en la raíz del proyecto tomando como referencia el archivo .env.example.
 
 Ejemplo:
 
-```env
 PORT=8080
-```
 
-> El archivo `.env` no debe subirse al repositorio. Para esto se encuentra incluido en `.gitignore`.
 
-### 5. Iniciar el servidor
+El archivo .env no debe subirse al repositorio. Para esto se encuentra incluido en .gitignore.
+
+5. Iniciar el servidor
 
 Para iniciar el servidor en modo desarrollo:
 
-```bash
 npm run dev
-```
 
-El proyecto utiliza `Nodemon`, por lo que el servidor se reinicia automáticamente cuando se detectan cambios en los archivos.
+
+El proyecto utiliza Nodemon, por lo que el servidor se reinicia automáticamente cuando se detectan cambios en los archivos.
 
 Una vez iniciado, la API estará disponible en:
 
-```text
 http://localhost:8080
-```
 
-> El puerto utilizado depende del valor configurado en la variable `PORT`.
 
----
+El puerto utilizado depende del valor configurado en la variable PORT.
 
-# 📌 API REST
+📌 API REST
 
-La API utiliza como ruta base:
+La API cuenta actualmente con dos recursos principales:
 
-```text
-/api/services
-```
+/api/services — gestión de servicios.
 
-## 🔎 Endpoints disponibles
+/api/bookings — gestión de reservas.
 
-| Método | Endpoint            | Descripción                 |
-| ------ | ------------------- | --------------------------- |
-| GET    | `/api/services`     | Obtener todos los servicios |
-| GET    | `/api/services/:id` | Obtener un servicio por ID  |
-| POST   | `/api/services`     | Crear un nuevo servicio     |
-| PUT    | `/api/services/:id` | Actualizar un servicio      |
-| DELETE | `/api/services/:id` | Eliminar un servicio        |
+Las rutas correspondientes a las reservas se configuran en el archivo routerBooking.js.
 
----
+🔧 Recurso Services
 
-## 1. Obtener todos los servicios
+La API permite realizar operaciones CRUD sobre los servicios.
 
-### GET
+🔎 Endpoints disponibles
+Método	Endpoint	Descripción
+GET	/api/services	Obtener todos los servicios
+GET	/api/services/:id	Obtener un servicio por ID
+POST	/api/services	Crear un nuevo servicio
+PUT	/api/services/:id	Actualizar un servicio
+DELETE	/api/services/:id	Eliminar un servicio
+1. Obtener todos los servicios
 
-```http
+GET
+
 GET http://localhost:8080/api/services
-```
+
 
 Devuelve la lista de servicios registrados.
 
----
+2. Obtener un servicio por ID
 
-## 2. Obtener un servicio por ID
+GET
 
-### GET
-
-```http
 GET http://localhost:8080/api/services/:id
-```
+
 
 Ejemplo:
 
-```http
 GET http://localhost:8080/api/services/1
-```
 
-El valor `1` corresponde al ID del servicio que se desea consultar.
 
----
+El valor 1 corresponde al ID del servicio que se desea consultar.
 
-## 3. Crear un nuevo servicio
+3. Crear un nuevo servicio
 
-### POST
+POST
 
-```http
 POST http://localhost:8080/api/services
-```
 
-Enviar los datos mediante el **Body** en formato JSON.
+
+Enviar los datos mediante el Body en formato JSON.
 
 Ejemplo:
 
-```json
 {
   "name": "Servicio de prueba",
   "description": "Descripción del servicio",
@@ -151,38 +147,29 @@ Ejemplo:
   "category": "General",
   "available": true
 }
-```
 
-### Campos
+Campos
+Campo	Tipo	Descripción
+name	String	Nombre del servicio
+description	String	Descripción del servicio
+duration	Number	Duración del servicio
+price	Number	Precio del servicio
+category	String	Categoría del servicio
+available	Boolean	Indica si el servicio está disponible
+4. Actualizar un servicio
 
-| Campo         | Tipo    | Descripción                           |
-| ------------- | ------- | ------------------------------------- |
-| `name`        | String  | Nombre del servicio                   |
-| `description` | String  | Descripción del servicio              |
-| `duration`    | Number  | Duración del servicio                 |
-| `price`       | Number  | Precio del servicio                   |
-| `category`    | String  | Categoría del servicio                |
-| `available`   | Boolean | Indica si el servicio está disponible |
+PUT
 
----
-
-## 4. Actualizar un servicio
-
-### PUT
-
-```http
 PUT http://localhost:8080/api/services/:id
-```
+
 
 Ejemplo:
 
-```http
 PUT http://localhost:8080/api/services/1
-```
+
 
 Body:
 
-```json
 {
   "name": "Servicio actualizado",
   "description": "Nueva descripción",
@@ -191,81 +178,223 @@ Body:
   "category": "General",
   "available": true
 }
-```
 
-El `:id` corresponde al servicio que se desea modificar.
 
----
+El :id corresponde al servicio que se desea modificar.
 
-## 5. Eliminar un servicio
+5. Eliminar un servicio
 
-### DELETE
+DELETE
 
-```http
 DELETE http://localhost:8080/api/services/:id
-```
+
 
 Ejemplo:
 
-```http
 DELETE http://localhost:8080/api/services/1
-```
 
-El `:id` corresponde al servicio que se desea eliminar.
 
----
+El :id corresponde al servicio que se desea eliminar.
 
-# 🧪 Pruebas de la API
+📅 Recurso Bookings
+
+El recurso bookings permite administrar las reservas de los clientes y asociar servicios a cada reserva.
+
+Cada reserva posee la siguiente estructura:
+
+{
+  "id": 1,
+  "clientName": "Martin Biagi",
+  "clientEmail": "Martin@email.com",
+  "date": "2026-10-10",
+  "time": "15:30",
+  "status": "confirmada",
+  "services": []
+}
+
+
+El campo id se genera automáticamente.
+
+Los servicios asociados a una reserva se almacenan dentro del array services utilizando la siguiente estructura:
+
+{
+  "service": 1,
+  "quantity": 1
+}
+
+
+Si el mismo servicio se agrega nuevamente a la reserva, no se crea un nuevo elemento. Se incrementa la propiedad quantity.
+
+Por ejemplo:
+
+"services": [
+  {
+    "service": 1,
+    "quantity": 2
+  }
+]
+
+
+Las rutas correspondientes a este recurso se configuran en el archivo:
+
+routerBooking.js
+
+🔎 Endpoints disponibles
+Método	Endpoint	Descripción
+POST	/api/bookings	Crear una nueva reserva
+GET	/api/bookings/:bid	Obtener una reserva por ID
+POST	/api/bookings/:bid/services/:sid	Agregar un servicio a una reserva
+1. Crear una reserva
+
+POST
+
+POST http://localhost:8080/api/bookings
+
+
+La reserva puede crearse inicialmente con el array services vacío.
+
+Ejemplo:
+
+{
+  "clientName": "Martin Biagi",
+  "clientEmail": "Martin@email.com",
+  "date": "2026-10-10",
+  "time": "15:30",
+  "status": "confirmada",
+  "services": []
+}
+
+
+El id de la reserva se genera automáticamente.
+
+2. Obtener una reserva por ID
+
+GET
+
+GET http://localhost:8080/api/bookings/:bid
+
+
+Ejemplo:
+
+GET http://localhost:8080/api/bookings/1
+
+
+El :bid corresponde al ID de la reserva que se desea consultar.
+
+3. Agregar un servicio a una reserva
+
+POST
+
+POST http://localhost:8080/api/bookings/:bid/services/:sid
+
+
+Ejemplo:
+
+POST http://localhost:8080/api/bookings/1/services/2
+
+
+Donde:
+
+:bid corresponde al ID de la reserva.
+
+:sid corresponde al ID del servicio.
+
+Antes de agregar el servicio, la API valida que:
+
+La reserva exista.
+
+El servicio exista.
+
+Si el servicio todavía no está asociado a la reserva, se agrega con:
+
+{
+  "service": 2,
+  "quantity": 1
+}
+
+
+Si el servicio ya existe dentro de la reserva, se incrementa su cantidad:
+
+{
+  "service": 2,
+  "quantity": 2
+}
+
+🧪 Pruebas de la API
 
 Los endpoints pueden probarse utilizando herramientas como:
 
-* Postman
-* Insomnia
-* Thunder Client
-* REST Client para VS Code
+Postman
 
-Se recomienda probar cada endpoint utilizando los diferentes métodos HTTP:
+Insomnia
 
-```text
+Thunder Client
+
+REST Client para VS Code
+
+Se recomienda probar los diferentes endpoints utilizando los métodos HTTP correspondientes:
+
 GET
 POST
 PUT
 DELETE
-```
 
----
 
-# 📦 Dependencias
+Para el recurso bookings:
+
+POST /api/bookings
+GET /api/bookings/:bid
+POST /api/bookings/:bid/services/:sid
+
+📦 Dependencias
 
 El proyecto utiliza actualmente:
 
-* **Express 5.2.1** — Framework para la creación del servidor y la API REST.
-* **dotenv 17.4.2** — Gestión de variables de entorno.
+Express 5.2.1 — Framework para la creación del servidor y la API REST.
 
-El proyecto utiliza **ES Modules**, por lo que se trabaja con `import` y `export`.
+dotenv 17.4.2 — Gestión de variables de entorno.
 
----
+El proyecto utiliza ES Modules, por lo que se trabaja con import y export.
 
-# 🎯 Objetivo del proyecto
+La persistencia de los datos se realiza mediante archivos JSON utilizando el módulo fs/promises de Node.js.
 
-Este proyecto forma parte del aprendizaje de **Backend con Node.js** y tiene como objetivo aplicar conceptos fundamentales del desarrollo de APIs REST, incluyendo:
+🎯 Objetivo del proyecto
 
-* Creación de servidores con Node.js.
-* Uso del framework Express.
-* Manejo de rutas.
-* Métodos HTTP.
-* Creación de endpoints.
-* Manejo de parámetros.
-* Recepción de información mediante JSON.
-* Operaciones CRUD.
-* Uso de variables de entorno.
-* Organización básica de un proyecto backend.
+Este proyecto forma parte del aprendizaje de Backend con Node.js y tiene como objetivo aplicar conceptos fundamentales del desarrollo de APIs REST, incluyendo:
 
----
+Creación de servidores con Node.js.
 
-# 👨‍💻 Autor
+Uso del framework Express.
 
-**Martin F. Melendez**
+Manejo de rutas.
+
+Organización de rutas mediante routers.
+
+Métodos HTTP.
+
+Creación de endpoints.
+
+Manejo de parámetros.
+
+Recepción de información mediante JSON.
+
+Operaciones CRUD.
+
+Gestión de reservas.
+
+Asociación de servicios a reservas.
+
+Manejo de cantidades de servicios.
+
+Persistencia de datos mediante File System.
+
+Uso de variables de entorno.
+
+Organización básica de un proyecto backend.
+
+👨‍💻 Autor
+
+Martin F. Melendez
 
 Repositorio:
 
